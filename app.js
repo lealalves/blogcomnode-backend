@@ -5,8 +5,8 @@
     const admin = require('./routes/admin')
     const usuarios = require('./routes/usuario')
     const session = require('express-session')
-    const Postagem = require('../backend/models/Postagem')
-    const Categoria = require('../backend/models/Categoria')
+    const Postagem = require('./models/Postagem')
+    const Categoria = require('./models/Categoria')
     const passport = require('passport')
 
     require('dotenv').config()    
