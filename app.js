@@ -8,6 +8,8 @@
     const Postagem = require('../backend/models/Postagem')
     const Categoria = require('../backend/models/Categoria')
     const passport = require('passport')
+
+    require('dotenv').config()    
     require('./config/auth')(passport)
 
     const app = express()
@@ -34,7 +36,9 @@
       next()
     })
 // conexao mongodb
-    mongoose.connect(`mongodb+srv://leal:OBNKZOqSCHG4OYRm@apicluster.kbp4k.mongodb.net/bddcurso?retryWrites=true&w=majority`)
+    const DB_USER = process.env.DB_USER
+    const DB_PASSWORD = process.env.DB_PASSWORD
+    mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@apicluster.kbp4k.mongodb.net/bddcurso?retryWrites=true&w=majority`)
     .then(() => {
       console.log("Banco Conectado!");
     }).catch((err) => console.log(err))
@@ -81,5 +85,5 @@
       .catch((err) => res.send({texto: 'Categoria inexistente'}))
     })
 // outros
-const PORT = 8081
-app.listen(PORT, () => console.log('Servidor rodando! http://localhost:8081'))
+const PORT = process.env.PORT || 8081
+app.listen(PORT, () => console.log('Servidor rodando!'))
