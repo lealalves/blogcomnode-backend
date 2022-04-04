@@ -85,5 +85,4 @@
       .catch((err) => res.send({texto: 'Categoria inexistente'}))
     })
 // outros
-const PORT = process.env.PORT || 8081
-app.listen(PORT, () => console.log('Servidor rodando!'))
+app.listen(process.env.PORT || 8081, () => console.log('Servidor rodando!'))
