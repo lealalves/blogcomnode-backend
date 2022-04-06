@@ -27,7 +27,6 @@
         secret: 'cat is love',
         resave: true,
         saveUninitialized: true,
-        cookie: { secure: false }
     }))
     app.use(passport.initialize())
     app.use(passport.session())
