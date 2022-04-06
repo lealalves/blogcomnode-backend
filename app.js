@@ -24,7 +24,7 @@
     app.use(express.json())
 // sessao
     app.use(session({
-        secret: 'cat is love',
+        secret: process.env.SESSION_SECRET,
         resave: true,
         saveUninitialized: true,
     }))
