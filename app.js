@@ -31,12 +31,10 @@
     app.set('trust proxy', 1)
     app.use(session({
         secret: process.env.SESSION_SECRET,
-        resave: true,
+        resave: false,
         saveUninitialized: true,
         store: store,
-        cookie: {
-          secure: (process.env.NODE_ENV && process.env.NODE_ENV == 'production') ? true : false
-        }
+        cookie: { secure: true }
     }))
     app.use(passport.initialize())
     app.use(passport.session())
