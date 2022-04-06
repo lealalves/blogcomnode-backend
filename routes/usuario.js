@@ -63,7 +63,6 @@ router.post('/registro', (req, res) => {
                 nome: nome,
                 email: email,
                 senha: novasenha,
-                eAdmin: 1
               })
               novoUsuario.save()
               .then(() => res.send({texto: 'Usuário cadastrado com sucesso!', ok: true}))
