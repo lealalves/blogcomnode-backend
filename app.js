@@ -39,6 +39,7 @@
         resave: false,
         saveUninitialized: false,
         proxy: true,
+        name: 'cokkkiieename',
         store: storeDb,
         cookie: { 
           secure: process.env.NODE_ENV == 'production'? true : false, 
