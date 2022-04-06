@@ -16,14 +16,7 @@
     const app = express()
     
 // configurações
-    if(process.env.NODE_ENV === 'production'){
-      app.use(cors({
-        origin: 'https://blogcomnode-frontend.herokuapp.com',
-        credentials: true
-      }))
-    }else {
-      app.use(cors())
-    } 
+    app.use(cors())
     app.use(
         express.urlencoded({
             extended: true
