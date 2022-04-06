@@ -34,7 +34,7 @@
         resave: false,
         saveUninitialized: true,
         store: store,
-        cookie: { secure: true }
+        cookie: { secure: true, httpOnly: false }
     }))
     app.use(passport.initialize())
     app.use(passport.session())
