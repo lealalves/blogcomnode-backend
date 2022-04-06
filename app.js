@@ -16,7 +16,10 @@
     const app = express()
     
 // configurações
-    app.use(cors())
+    app.use(cors({
+      origin: 'https://blogcomnode-frontend.herokuapp.com',
+      credentials: true
+    }))
     app.use(
         express.urlencoded({
             extended: true
