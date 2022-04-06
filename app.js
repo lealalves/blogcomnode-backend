@@ -34,18 +34,16 @@
       dbName: 'sessiontest'
     })
 // sessao
-    if(process.env.NODE_ENV === 'production'){
-      app.set('trust proxy', 1)
-    }
     app.use(session({
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
+        proxy: true,
         store: storeDb,
         cookie: { 
           secure: process.env.NODE_ENV == 'production'? true : false, 
           httpOnly: true,
-          sameSite: 'none'
+          sameSite: process.env.NODE_ENV == 'production'? 'none' : 'lax'
         }
     }))
     app.use(passport.initialize())
