@@ -21,7 +21,7 @@
         origin: 'https://blogcomnode-frontend.herokuapp.com',
         credentials: true
       }))
-    }else
+    }
     app.use(cors())
     app.use(
         express.urlencoded({
@@ -38,12 +38,11 @@
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
-        proxy: true,
-        name: 'cokkkiieename',
         store: storeDb,
         cookie: { 
           secure: process.env.NODE_ENV == 'production'? true : false, 
           httpOnly: true,
+          maxAge: 1000 * 60 * 60 * 48,
           sameSite: process.env.NODE_ENV == 'production'? 'none' : 'lax'
         }
     }))
