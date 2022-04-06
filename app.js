@@ -29,6 +29,10 @@
         })
     )
     app.use(express.json())
+    const storeDb = MongoStore.create({
+      mongoUrl: `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@apicluster.kbp4k.mongodb.net/`,
+      dbName: 'sessiontest'
+    })
 // sessao
     if(process.env.NODE_ENV === 'production'){
       app.set('trust proxy', 1)
@@ -37,10 +41,7 @@
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
-        store: MongoStore.create({
-          mongoUrl: `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@apicluster.kbp4k.mongodb.net/`,
-          dbName: 'sessiontest'
-        }),
+        store: storeDb,
         cookie: { 
           secure: process.env.NODE_ENV == 'production'? true : false, 
           httpOnly: true 
