@@ -21,8 +21,9 @@
         origin: 'https://blogcomnode-frontend.herokuapp.com',
         credentials: true
       }))
-    }
-    app.use(cors())
+    }else {
+      app.use(cors())
+    } 
     app.use(
         express.urlencoded({
             extended: true
