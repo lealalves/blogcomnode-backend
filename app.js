@@ -34,7 +34,7 @@
         saveUninitialized: false,
         store: storeDb,
         cookie: { 
-          secure: process.env.NODE_ENV == 'production'? true : false, 
+          secure: false, 
           httpOnly: true,
           maxAge: 1000 * 60 * 60 * 48,
         }
