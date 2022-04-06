@@ -109,6 +109,7 @@ router.post('/login', (req, res, next) => {
           return
         }
         res.send({texto: 'Logado com sucesso!', ok: true, usuario: usuario})
+        console.log("Logou!" + req.isAuthenticated());
       })
 
     })(req, res, next)
