@@ -28,11 +28,15 @@
       collection: 'blogSession'
     })
 // sessao
+    app.set('trust proxy', 1)
     app.use(session({
         secret: process.env.SESSION_SECRET,
         resave: true,
         saveUninitialized: true,
-        store: store
+        store: store,
+        cookie: {
+          secure: (process.env.NODE_ENV && process.env.NODE_ENV == 'production') ? true : false
+        }
     }))
     app.use(passport.initialize())
     app.use(passport.session())
