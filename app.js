@@ -37,7 +37,6 @@
           secure: process.env.NODE_ENV == 'production'? true : false, 
           httpOnly: true,
           maxAge: 1000 * 60 * 60 * 48,
-          sameSite: process.env.NODE_ENV == 'production'? 'none' : 'lax'
         }
     }))
     app.use(passport.initialize())
