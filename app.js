@@ -44,7 +44,8 @@
         store: storeDb,
         cookie: { 
           secure: process.env.NODE_ENV == 'production'? true : false, 
-          httpOnly: true 
+          httpOnly: true,
+          sameSite: 'none'
         }
     }))
     app.use(passport.initialize())
