@@ -8,7 +8,7 @@
     const Postagem = require('./models/Postagem')
     const Categoria = require('./models/Categoria')
     const passport = require('passport')
-    const MongoStore = require('connect-mongodb-session')(session)
+    const MongoStore = require('connect-mongo')
 
     require('dotenv').config()    
     require('./config/auth')(passport)
@@ -16,28 +16,35 @@
     const app = express()
     
 // configurações
-    app.use(cors({
-      origin: 'https://blogcomnode-frontend.herokuapp.com',
-      credentials: true
-    }))
+    if(process.env.NODE_ENV === 'production'){
+      app.use(cors({
+        origin: 'https://blogcomnode-frontend.herokuapp.com',
+        credentials: true
+      }))
+    }else
+    app.use(cors())
     app.use(
         express.urlencoded({
             extended: true
         })
     )
     app.use(express.json())
-    const store = new MongoStore({
-      uri: `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@apicluster.kbp4k.mongodb.net/`,
-      collection: 'blogSession'
-    })
 // sessao
-    app.set('trust proxy', 1)
+    if(process.env.NODE_ENV === 'production'){
+      app.set('trust proxy', 1)
+    }
     app.use(session({
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
-        store: store,
-        cookie: { secure: true, httpOnly: false }
+        store: MongoStore.create({
+          mongoUrl: `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@apicluster.kbp4k.mongodb.net/`,
+          dbName: 'sessiontest'
+        }),
+        cookie: { 
+          secure: process.env.NODE_ENV == 'production'? true : false, 
+          httpOnly: true 
+        }
     }))
     app.use(passport.initialize())
     app.use(passport.session())
