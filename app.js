@@ -55,7 +55,6 @@
     app.use('/usuarios', usuarios)
   
     app.get('/', (req, res) =>{
-      console.log("Página inicial" + req.isAuthenticated());
       Postagem.find().populate('categoria').sort({date: 'DESC'})
       .then((postagens) => res.send({postagens, ok: true}))
       .catch((err) => res.send({texto: 'Houve um erro ao buscar postagens', ok: false}))
