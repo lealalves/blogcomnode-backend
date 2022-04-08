@@ -2,7 +2,8 @@ const express = require('express')
 const router = express.Router()
 const Categoria = require('../models/Categoria')
 const Postagem = require('../models/Postagem')
-const {admin} = require('../helpers/eAdmin')
+const {admin} = require('../helpers/userAcess')
+const {isAuth} = require('../helpers/userAcess')
 
 router.get('/', (req, res) => {
     res.send('Página principal painel administrativo')
@@ -16,7 +17,7 @@ router.get('/postagens', admin, (req, res) => {
   .catch((err) => console.log(err))
 })
 
-router.post('/postagens/nova', admin, (req, res) => {
+router.post('/postagens/nova', isAuth, (req, res) => {
     const {titulo, slug, descricao, conteudo, categoria} = req.body
 
     let errors = []
@@ -127,7 +128,7 @@ router.get('/postagens/deletar/:id', admin, (req, res) => {
 
 // Rotas Categorias
 
-router.get('/categorias', admin, (req, res) => {
+router.get('/categorias', isAuth, (req, res) => {
     Categoria.find().sort({date: 'desc'})
     .then((categorias) =>{
         res.send({categorias, ok: true})

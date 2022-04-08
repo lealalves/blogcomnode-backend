@@ -65,7 +65,7 @@ router.post('/registro', (req, res) => {
                 senha: novasenha,
               })
               novoUsuario.save()
-              .then(() => res.send({texto: 'Usuário cadastrado com sucesso!', ok: true}))
+              .then(() => res.send({texto: 'Usuário cadastrado com sucesso! Faça já o seu login.', ok: true}))
               .catch((err) => {
                 errors.push({texto: 'Houve um erro ao tentar cadastrar o usuário.'})
                 res.send(errors)
