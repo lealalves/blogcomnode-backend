@@ -12,8 +12,9 @@ Blog onde é possível:
 - contas com niveis de permissões;
 - login persistente.
 
-Tecnologias usadas:
+Interface responsiva(ou quase..)
 
+Tecnologias usadas:
 Front-end:
 - Vue.js
 
