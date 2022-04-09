@@ -146,7 +146,7 @@ router.post('/categorias/nova', admin, (req, res) => {
         errors.push({texto: "Nome Inválido."})
     }
 
-    if(!slug || slug == undefined || slug == null){
+    if(!slug || slug == undefined || slug == null || slug == 'slug'){
         errors.push({texto: "Slug Inválido."})
     }
 
