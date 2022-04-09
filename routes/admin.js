@@ -26,7 +26,7 @@ router.post('/postagens/nova', isAuth, (req, res) => {
         errors.push({texto: "Título Inválido."})
     }
 
-    if(!slug || slug == undefined || slug == null){
+    if(!slug || slug == undefined || slug == null || slug == 'slug'){
         errors.push({texto: "Slug Inválido."})
     }
 
