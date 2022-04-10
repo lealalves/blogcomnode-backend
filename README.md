@@ -15,6 +15,7 @@ Blog onde é possível:
 Interface responsiva(ou quase..)
 
 Tecnologias usadas:
+
 Front-end:
 - Vue.js
 
@@ -25,7 +26,6 @@ Back-end:
 - - Bcrypt
 - - Passport.js
 - - Dotenv
-- - Cors
 - Banco de dados MongoDB Cloud
 
 Repositório back-end do site, confira o front-end em: https://github.com/lealalves/blogcomnodejs-frontend.
