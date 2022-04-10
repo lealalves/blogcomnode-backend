@@ -15,6 +15,7 @@ Blog onde é possível:
 Interface responsiva(ou quase..)
 
 Tecnologias usadas:
+
 Front-end:
 - Vue.js
 
