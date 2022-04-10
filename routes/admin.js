@@ -12,52 +12,64 @@ router.get('/', (req, res) => {
 // Rotas Postagens
 
 router.get('/postagens', admin, (req, res) => {
-  Postagem.find().populate('categoria').sort({date: 'desc'})
+  Postagem.find().populate('categoria').populate('autor').sort({date: 'desc'})
   .then((postagens) => res.send({postagens, ok: true}))
   .catch((err) => console.log(err))
 })
 
 router.post('/postagens/nova', isAuth, (req, res) => {
-    const {titulo, slug, descricao, conteudo, categoria} = req.body
+    const {titulo, slug, descricao, conteudo, categoria, autor} = req.body
 
     let errors = []
 
-    if(!titulo || titulo == undefined || titulo == null){
-        errors.push({texto: "Título Inválido."})
-    }
+    Postagem.findOne({slug: slug})
+    .then((postagem) => {
+      if(postagem){
+        errors.push({texto: "Slug já está sendo usado por outra postagem!"})
+        res.send(errors)
+      }else {
 
-    if(!slug || slug == undefined || slug == null || slug == 'slug'){
-        errors.push({texto: "Slug Inválido."})
-    }
+        if(!titulo || titulo == undefined || titulo == null){
+          errors.push({texto: "Título Inválido."})
+        }
+    
+        if(!slug || slug == undefined || slug == null || slug == 'slug'){
+            errors.push({texto: "Slug Inválido."})
+        }
+    
+        if(!descricao || descricao == undefined || descricao == null){
+            errors.push({texto: "Descrição Inválida."})
+        }
+    
+        if(!conteudo || conteudo == undefined || conteudo == null){
+            errors.push({texto: "Conteúdo Inválido."})
+        }
+    
+        if(categoria == 0){
+            errors.push({texto: "Categoria Inválida."})
+        }
+    
+        if(errors.length > 0){
+            res.json(errors)
+        } else {
+    
+            const postagem = new Postagem({
+                titulo: titulo,
+                slug: slug,
+                descricao: descricao,
+                conteudo: conteudo,
+                categoria: categoria,
+                autor: autor
+            })
+    
+            postagem.save()
+            .then(() => res.send({texto: 'Postagem salva com sucesso!', ok: true}))
+            .catch((err) => res.send({texto: 'Houve um erro ao salvar a postagem.', ok: false}))
+        }
 
-    if(!descricao || descricao == undefined || descricao == null){
-        errors.push({texto: "Descrição Inválida."})
-    }
+      }
+    }).catch((err) => res.send({texto: 'Houve um erro interno.', ok: false}))
 
-    if(!conteudo || conteudo == undefined || conteudo == null){
-        errors.push({texto: "Conteúdo Inválido."})
-    }
-
-    if(categoria == 0){
-        errors.push({texto: "Categoria Inválida."})
-    }
-
-    if(errors.length > 0){
-        res.json(errors)
-    } else {
-
-        const postagem = new Postagem({
-            titulo: titulo,
-            slug: slug,
-            descricao: descricao,
-            conteudo: conteudo,
-            categoria: categoria
-        })
-
-        postagem.save()
-        .then(() => res.send({texto: 'Postagem salva com sucesso!', ok: true}))
-        .catch((err) => res.send({texto: 'Houve um erro ao salvar a postagem.', ok: false}))
-    }
 })
 
 router.get('/postagens/editar/:id', admin, (req, res) =>{

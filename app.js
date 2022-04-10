@@ -55,13 +55,13 @@
     app.use('/usuarios', usuarios)
   
     app.get('/', (req, res) =>{
-      Postagem.find().populate('categoria').sort({date: 'DESC'})
+      Postagem.find().populate('categoria').populate('autor').sort({date: 'DESC'})
       .then((postagens) => res.send({postagens, ok: true}))
       .catch((err) => res.send({texto: 'Houve um erro ao buscar postagens', ok: false}))
     })
 
     app.get('/postagem/:slug', (req, res) => {
-        Postagem.findOne({slug: req.params.slug})
+        Postagem.findOne({slug: req.params.slug}).populate('autor')
         .then((postagem) => {
             if(postagem){
                 res.send({postagem, ok: true})
@@ -86,7 +86,7 @@
     app.get('/categorias/:slug', (req, res) => {
       Categoria.findOne({slug: req.params.slug})
       .then((categoria) => {
-        Postagem.find({categoria: categoria._id})
+        Postagem.find({categoria: categoria._id}).populate('autor')
         .then((postagens) => res.send({categoria, postagens, ok: true}))
         .catch((err) => res.send({texto: 'Nenhuma postagem localizada!', ok: false}))
        })
