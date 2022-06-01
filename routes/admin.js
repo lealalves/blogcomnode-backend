@@ -2,15 +2,9 @@ const express = require('express')
 const router = express.Router()
 const Categoria = require('../models/Categoria')
 const Postagem = require('../models/Postagem')
-const {admin} = require('../helpers/userAcess')
-const {isAuth} = require('../helpers/userAcess')
-
-router.get('/', (req, res) => {
-	res.send('Página principal painel administrativo')
-})
+const {admin, isAuth} = require('../helpers/userAcess')
 
 // Rotas Postagens
-
 router.get('/postagens', admin, (req, res) => {
 	Postagem.find().populate('categoria').populate('autor').sort({date: 'desc'})
 		.then((postagens) => res.send({postagens, ok: true}))
@@ -139,7 +133,6 @@ router.get('/postagens/deletar/:id', admin, (req, res) => {
 })
 
 // Rotas Categorias
-
 router.get('/categorias', isAuth, (req, res) => {
 	Categoria.find().sort({date: 'desc'})
 		.then((categorias) =>{
@@ -239,5 +232,6 @@ router.get('/categoria/deletar/:id', admin, (req, res) => {
 			res.send({texto: 'Houve um erro ao tentar deletar a categoria.', ok: false})
 		})
 })
+
 module.exports = router
 

@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt')
 const passport = require('passport')
 const router = express.Router()
 
+const UsersController = require('../controllers/users')
+const userController = new UsersController(Usuario)
 
 router.get('/', (req, res) => {
 	if(req.isAuthenticated()){
@@ -81,37 +83,7 @@ router.post('/registro', (req, res) => {
 	}  
 })
 
-router.post('/login', (req, res, next) => {
-	const {email, senha} = req.body
-
-	let errors = []
-
-	if(!email || email == null || email == undefined){
-		errors.push({texto: 'Por favor, digite o seu e-mail.'})
-	}
-
-	if(!senha || senha == null || senha == undefined){
-		errors.push({texto: 'Por favor, digite sua senha.'})
-	}
-
-	if(errors.length > 0){
-		return res.send(errors)
-	} else {
-		passport.authenticate('local', (done, usuario, error) =>{
-			if(!usuario){
-				errors.push(error)
-				res.send(errors)
-			}
-			req.logIn(usuario, (error) => {
-				if(error) {
-					return
-				}
-				res.send({texto: 'Logado com sucesso!', ok: true, usuario: usuario})
-			})
-
-		})(req, res, next)
-	}
-})
+router.post('/login', (req, res, next) => userController.login(req, res, next))
 
 router.get('/logout', (req, res) => {
 	req.logout()
